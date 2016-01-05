@@ -1,0 +1,104 @@
+@charset "utf-8";
+//-----------------------------------------------------
+// common scss
+// 整合常用的 mixin，%，@function
+//-----------------------------------------------------
+
+@mixin inline-block($extend:true) {
+    @if $extend {
+        @extend %inline-block;
+    } @else {
+        display: inline-block;
+        @if $lte7 {
+            *display: inline;
+            *zoom: 1;
+        }
+    }
+}
+%inline-block {
+    @include inline-block(false);
+}
+
+@mixin center-block($extend:true) {
+    @if $extend {
+        @extend %center-block;
+    } @else {
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+%center-block {
+    @include center-block(false);
+}
+
+@mixin clearfix($extend:true) {
+    @if $extend {
+        @extend %clearfix;
+    } @else {
+        @if $lte7 {
+            *zoom: 1;
+        }
+        &:before, &:after {
+            display: table;
+            content: "";
+        }
+        &:after {
+            clear: both;
+            overflow: hidden;
+        }
+    }
+}
+%clearfix {
+    @include clearfix(false);
+}
+
+@mixin clear($extend:true) {
+    @if $extend {
+        @extend %clear;
+    } @else {
+        display: block;
+        clear: both;
+        overflow: hidden;
+        height: 0;
+        font-size: 0;
+        line-height: 0;
+    }
+}
+%clear {
+    @include clear(false);
+}
+
+@mixin float($float:left) {
+    float: $float;
+    @if $lte7 {
+        display: inline;
+    }
+}
+%float {
+    @include float;
+}
+
+@mixin opacity($opacity:50) {
+    opacity: $opacity / 100;
+    @if $filter {
+        filter: alpha(opacity=$opacity);
+    }
+}
+
+@mixin bgcolor-alpha($bgColor:rgba(0,0,0,.5)) {
+    @if $filter {
+        filter:progid:DXImageTransform.Microsoft.gradient(enabled='true',startColorstr='#{ie-hex-str($bgColor)}', endColorstr='#{ie-hex-str($bgColor)}');
+    }
+    background-color:$bgColor;
+    :root & {
+        filter: none;
+    }
+}
+
+@mixin min-height($height) {
+    min-height: $height;
+    height: auto !important;
+    @if $lte7{
+        _height: $height;
+    }
+}

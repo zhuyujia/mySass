@@ -10,6 +10,10 @@
 
 目前尚未整理
 
+## common.scss ##
+
+整合常用的 mixin，% 和 @function
+
 ## css3.scss ##
 
 整理常用的一些 css3 属性
