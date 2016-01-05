@@ -1,6 +1,4 @@
-# mySass #
-
-个人的 sass 库。
+自己整理的 sass 库。参考了 [sassCore](https://github.com/marvin1023/sassCore)。
 
 ## config.scss ##
 
