@@ -8,8 +8,6 @@
 
 重置浏览器的默认样式（参考：[normalize](https://github.com/necolas/normalize.css/)）以及设置表单占位符文本颜色（默认关闭）
 
-目前尚未整理
-
 ## common.scss ##
 
 整合常用的 mixin，% 和 @function
