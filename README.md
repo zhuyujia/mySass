@@ -1,4 +1,4 @@
-zSass 是自己整理的一个 sass 库，参考了 [sassCore](https://github.com/marvin1023/sassCore)。它包括：
+[zSass](https://github.com/zhuyujia/zSass) 是自己整理的一个 sass 库，参考了 [sassCore](https://github.com/marvin1023/sassCore)。它包括：
 
 ## config.scss ##
 
