@@ -1,0 +1,82 @@
+@charset "utf-8";
+//-----------------------------------------------------
+// css3 scss
+// 整理常用的一些 css3 属性
+//-----------------------------------------------------
+
+$prefixWebkit: true !default;
+$prefixMoz:    true !default;
+$prefixMs:     true !default;
+$prefixSpec:   true !default;
+
+@mixin prefixer($property, $value, $prefixes: webkit moz ms spec) {
+    @each $prefix in $prefixes {
+        @if $prefix == webkit and $prefixWebkit == true {
+            -webkit-#{$property}: $value;
+        }
+        @else if $prefix == moz and $prefixMoz == true {
+            -moz-#{$property}: $value;
+        }
+        @else if $prefix == ms and $prefixMs == true {
+            -ms-#{$property}: $value;
+        }
+        @else if $prefix == spec and $prefixSpec == true {
+            #{$property}: $value;
+        }
+    }
+}
+
+//box-shadow(inset 0 -2px 0 red);
+//box-shadow(inset 0 -2px 0 red, 0 0 0 blue);
+@mixin box-shadow($shadow...) {
+	@include prefixer(box-shadow, $shadow);
+}
+
+//$value: padding-box || border-box || content-box
+@mixin background-origin($value...) {
+	@include prefixer(background-origin, $value);
+}
+
+//$value: border-box || padding-box || content-box || text
+@mixin background-clip($value...) {
+	@if $value == text {
+		@include prefixer(background-clip, $value, webkit);
+	} @else {
+		@include prefixer(background-clip, $value);
+	}
+}
+
+//$value: auto || 100px || 50% || cover || contain
+@mixin background-size($value...) {
+	@include prefixer(background-size, $value);
+}
+
+
+
+
+
+//text-fill-color()
+@mixin text-fill-color($color: transparent) {
+	@include background-clip(text);
+	@include prefixer(text-fill-color, $color, webkit);
+}
+
+//text-stroke(1px red)
+@mixin text-stroke($value) {
+	@include prefixer(text-stroke, $value, webkit);
+}
+
+
+
+/* //linear-gradient(top, #fff, #000)
+@mixin linear-gradient($gradient...) {
+	background-color: #fff;
+	background-image: -webkit-linear-gradient($gradient);
+	background-image: -moz-linear-gradient($gradient);
+	@if nth($gradient, 1) == top {
+		//background-image: linear-gradient(to bottom, $gradient);
+	}
+	@if $filter {
+    	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=nth($gradient,2), endColorstr=nth($gradient,length($gradient)), GradientType=if(nth($gradient, 1) == top or nth($gradient, 1) == bottom, 0, 1));
+    }
+} */
