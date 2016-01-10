@@ -34,7 +34,7 @@ audio:not([controls]) {
 }
 
 body,button,input,optgroup,select,textarea {
-	color: $baseTextColor;
+    color: $baseTextColor;
     font-size: $baseFontSize;
     font-family: $baseFontFamily;
 }
@@ -180,7 +180,7 @@ th {
 }
 
 sub,sup {
-	position: relative;
+    position: relative;
     font-size: 75%;
     line-height: 0;
     vertical-align: baseline;
@@ -204,16 +204,16 @@ a {
         text-decoration: underline;
     }
     @if $lte7 {
-    	&:focus {
-    		outline: none;
-    	}
+        &:focus {
+            outline: none;
+        }
     }
 }
 
 * {
-	&:focus {
-		outline: none;
-	}
+    &:focus {
+        outline: none;
+    }
 }
 
 ul,ol {
