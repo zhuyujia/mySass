@@ -2,11 +2,11 @@
 
 ## config.scss ##
 
-配置文件，包括开关设置和默认值设置
+默认值设置。
 
 ## reset.scss ##
 
-重置浏览器的默认样式（参考：[normalize](https://github.com/necolas/normalize.css/)）以及设置表单占位符文本颜色（默认关闭）。
+重置浏览器样式。（参考：[normalize](https://github.com/necolas/normalize.css/)）
 
 ## common.scss ##
 
