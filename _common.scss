@@ -4,7 +4,7 @@
 // 整合常用的 mixin，%，@function
 //-----------------------------------------------------
 
-@mixin inline-block($extend:true) {
+@mixin inline-block($extend: true) {
     @if $extend {
         @extend %inline-block;
     } @else {
@@ -19,7 +19,7 @@
     @include inline-block(false);
 }
 
-@mixin center-block($extend:true) {
+@mixin center-block($extend: true) {
     @if $extend {
         @extend %center-block;
     } @else {
@@ -31,7 +31,7 @@
     @include center-block(false);
 }
 
-@mixin clearfix($extend:true) {
+@mixin clearfix($extend: true) {
     @if $extend {
         @extend %clearfix;
     } @else {
@@ -52,7 +52,7 @@
     @include clearfix(false);
 }
 
-@mixin clear($extend:true) {
+@mixin clear($extend: true) {
     @if $extend {
         @extend %clear;
     } @else {
@@ -68,7 +68,7 @@
     @include clear(false);
 }
 
-@mixin float($float:left) {
+@mixin float($float: left) {
     float: $float;
     @if $lte7 {
         display: inline;
@@ -78,14 +78,14 @@
     @include float;
 }
 
-@mixin opacity($opacity:50) {
+@mixin opacity($opacity: 50) {
     opacity: $opacity / 100;
     @if $filter {
         filter: alpha(opacity=$opacity);
     }
 }
 
-@mixin bgcolor-alpha($bgColor:rgba(0,0,0,.5)) {
+@mixin bgcolor-alpha($bgColor: rgba(0,0,0,.5)) {
     @if $filter {
         filter:progid:DXImageTransform.Microsoft.gradient(enabled='true',startColorstr='#{ie-hex-str($bgColor)}', endColorstr='#{ie-hex-str($bgColor)}');
     }

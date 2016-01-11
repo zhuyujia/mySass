@@ -1,7 +1,7 @@
 @charset "utf-8";
 //-----------------------------------------------------
 // reset scss
-// 需要设置 $lte7，$baseFontSize，$baseFontFamily，$baseTextColor，$placeholder
+// 重置浏览器样式
 //-----------------------------------------------------
 
 html {
@@ -41,10 +41,6 @@ body,button,input,optgroup,select,textarea {
 
 input,select,textarea {
     font-size: 100%;
-}
-
-fieldset {
-    border: none;
 }
 
 button {
@@ -98,8 +94,11 @@ input[type="search"]::-webkit-search-cancel-button,input[type="search"]::-webkit
     -webkit-appearance: none;
 }
 
+fieldset,legend {
+    border: none;
+}
+
 legend {
-    border: 0;
     @if $lte7 {
         *margin-left: -7px;
     }
@@ -197,16 +196,11 @@ sub {
 a {
     background-color: transparent;
     text-decoration: none;
-    &:active,&:hover {
+    &:active,&:hover,&:focus {
         outline: none;
     }
     &:hover {
         text-decoration: underline;
-    }
-    @if $lte7 {
-        &:focus {
-            outline: none;
-        }
     }
 }
 
