@@ -7,48 +7,63 @@
 $prefixWebkit: true !default;   //-webkit-
 $prefixMoz:    true !default;   //-moz-
 $prefixMs:     true !default;   //-ms-
-$prefixSpec:   true !default;   //标准
+$prefixNo:     true !default;   //标准
 
-@mixin prefixer($property, $value, $prefixes: webkit moz ms spec) {
+@mixin prefixer($property, $value, $prefixes: webkit) {
     @each $prefix in $prefixes {
-        @if $prefix == webkit and $prefixWebkit == true {
+        @if $prefix == webkit and $prefixWebkit {
             -webkit-#{$property}: $value;
         }
-        @else if $prefix == moz and $prefixMoz == true {
+        @else if $prefix == moz and $prefixMoz {
             -moz-#{$property}: $value;
         }
-        @else if $prefix == ms and $prefixMs == true {
+        @else if $prefix == ms and $prefixMs {
             -ms-#{$property}: $value;
         }
-        @else if $prefix == spec and $prefixSpec == true {
-            #{$property}: $value;
+    }
+    @if $prefixNo {
+        #{$property}: $value;
+    }
+}
+
+@mixin box-sizing($value: border-box) {
+    // border-box | content-box
+    @include prefixer(box-sizing, $value, webkit moz);
+}
+
+@mixin box-shadow($value...) {
+    @include prefixer(box-shadow, $value);
+}
+
+@mixin background-origin($value...) {
+    // padding-box | border-box | content-box
+    @if length($value) >= 1 {
+        @include prefixer(background-origin, $value)
+    } @else {
+        @include prefixer(background-origin, border-box);
+    }
+}
+
+@mixin background-size($value...) {
+    // auto || 100px || 50% || cover || contain
+    @if length($value) >= 1 {
+        @include prefixer(background-size, $value);
+    } @else {
+        @include prefixer(background-size, cover);
+    }
+}
+
+@mixin background-clip($value...) {
+    // border-box || padding-box || content-box || text
+    @if length($value) >= 1 {
+        @include prefixer(background-clip, $value);
+    } @else {
+        @if $value == text {
+            @include prefixer(background-clip, text);
+        } @else {
+            @include prefixer(background-clip, padding-box);
         }
     }
-}
-
-//box-shadow(inset 0 -2px 0 red);
-//box-shadow(inset 0 -2px 0 red, 0 0 0 blue);
-@mixin box-shadow($shadow...) {
-    @include prefixer(box-shadow, $shadow);
-}
-
-//$value: padding-box || border-box || content-box
-@mixin background-origin($value...) {
-    @include prefixer(background-origin, $value);
-}
-
-//$value: border-box || padding-box || content-box || text
-@mixin background-clip($value...) {
-    @if $value == text {
-        @include prefixer(background-clip, $value, webkit);
-    } @else {
-        @include prefixer(background-clip, $value);
-    }
-}
-
-//$value: auto || 100px || 50% || cover || contain
-@mixin background-size($value...) {
-    @include prefixer(background-size, $value);
 }
 
 //text-fill-color()
