@@ -2,11 +2,11 @@
 
 ## reset.scss ##
 
-重置浏览器样式。（参考：[normalize](https://github.com/necolas/normalize.css/)）
+重置浏览器样式及默认值设置。（参考：[normalize](https://github.com/necolas/normalize.css/)）
 
 ## common.scss ##
 
-整合常用的 mixin，% 和 @function。
+整合常用的 @mixin 和 %，后期还会扩展。
 
 ## css3.scss ##
 

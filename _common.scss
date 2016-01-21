@@ -1,7 +1,7 @@
 @charset "utf-8";
 //-----------------------------------------------------
 // common scss
-// 整合常用的 mixin，%，@function
+// 整合常用的 @mixin 和 %
 //-----------------------------------------------------
 
 @mixin inline-block {
@@ -68,6 +68,40 @@
     @include float(none);
 }
 
+@mixin visually-hidden($position: absolute) {
+    position: $position;    //必须将 position 设为 absolute/fixed
+    clip: rect(0 0 0 0);
+}
+%visually-hidden {
+    @include visually-hidden;
+}
+
+@mixin list-style($style: disc){
+    margin-left: 25px;
+    list-style: $style;
+}
+%list-style{
+    @include list-style;
+}
+
+@mixin ellipsis($width: 100%) {
+    overflow: hidden;
+    width: $width;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+%ellipsis {
+    @include text-ellipsis;
+}
+
+@mixin min-height($height) {
+    min-height: $height;
+    height: auto !important;
+    @if $lte7{
+        _height: $height;
+    }
+}
+
 @mixin opacity($opacity) {
     opacity: $opacity / 100;
     @if $filter {
@@ -85,20 +119,15 @@
     }
 }
 
-@mixin min-height($height) {
-    min-height: $height;
-    height: auto !important;
-    @if $lte7{
-        _height: $height;
+// 图片替换文字
+@mixin ir($height) {
+    border: none;
+    color: transparent;
+    font-size: 0;
+    line-height: 0;
+    @if $lte7 {
+        _overflow: hidden;
+        _font-size: 10px;
+        _line-height: $height;
     }
-}
-
-@mixin text-ellipsis($width: 100%) {
-    overflow: hidden;
-    width: $width;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-}
-%text-ellipsis {
-    @include text-ellipsis;
 }
