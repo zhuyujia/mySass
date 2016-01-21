@@ -9,15 +9,15 @@ $prefixMoz:    true !default;   //-moz-
 $prefixMs:     true !default;   //-ms-
 $prefixNo:     true !default;   //标准
 
-@mixin prefixer($property, $value, $prefixes: webkit) {
+// prefixer
+// 用于在属性上加前缀
+@mixin prefixer($property, $value, $prefixes: webkit moz) {
     @each $prefix in $prefixes {
         @if $prefix == webkit and $prefixWebkit {
             -webkit-#{$property}: $value;
-        }
-        @else if $prefix == moz and $prefixMoz {
+        } @else if $prefix == moz and $prefixMoz {
             -moz-#{$property}: $value;
-        }
-        @else if $prefix == ms and $prefixMs {
+        } @else if $prefix == ms and $prefixMs {
             -ms-#{$property}: $value;
         }
     }
@@ -26,9 +26,14 @@ $prefixNo:     true !default;   //标准
     }
 }
 
+@mixin user-select($value: text) {
+    // none | text | all | element
+    @include prefixer(user-select, $value, webkit moz ms);
+}
+
 @mixin box-sizing($value: border-box) {
     // border-box | content-box
-    @include prefixer(box-sizing, $value, webkit moz);
+    @include prefixer(box-sizing, $value);
 }
 
 @mixin box-shadow($value...) {
@@ -45,7 +50,7 @@ $prefixNo:     true !default;   //标准
 }
 
 @mixin background-size($value...) {
-    // auto || 100px || 50% || cover || contain
+    // auto | 100px | 50% | cover | contain
     @if length($value) >= 1 {
         @include prefixer(background-size, $value);
     } @else {
@@ -54,25 +59,89 @@ $prefixNo:     true !default;   //标准
 }
 
 @mixin background-clip($value...) {
-    // border-box || padding-box || content-box || text
+    // border-box | padding-box | content-box | text
     @if length($value) >= 1 {
         @include prefixer(background-clip, $value);
     } @else {
-        @if $value == text {
-            @include prefixer(background-clip, text);
-        } @else {
-            @include prefixer(background-clip, padding-box);
-        }
+        @include prefixer(background-clip, padding-box);
     }
 }
 
-//text-fill-color()
+// linear-gradient(90deg, #f00 0%, #0ff 50%, #0f0 100%)
+@mixin linear-gradient($gradient...) {
+    background-image: -webkit-linear-gradient($gradient);
+    background-image: -moz-linear-gradient($gradient);
+    background-image: linear-gradient($gradient);
+    @if $filter {
+        @if (removeUnit(nth($gradient, 1)) > 45 and removeUnit(nth($gradient, 1)) < 135) or (removeUnit(nth($gradient, 1)) > 225 and removeUnit(nth($gradient, 1)) < 315) {
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{ie-hex-str(nth(nth($gradient, 2), 1))}', endColorstr='#{ie-hex-str(nth(nth($gradient, length($gradient)), 1))}', gradientType=1);
+        } @else {
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{ie-hex-str(nth(nth($gradient, 2), 1))}', endColorstr='#{ie-hex-str(nth(nth($gradient, length($gradient)), 1))}', gradientType=0);
+        }
+    }
+}
+// repeating-linear-gradient(0deg, #f00, #ff0 10%, #f00 15%)
+@mixin repeating-linear-gradient($gradient...) {
+    background-image: -webkit-repeating-linear-gradient($gradient);
+    background-image: -moz-repeating-linear-gradient($gradient);
+    background-image: repeating-linear-gradient($gradient);
+    @if $filter {
+        @if (removeUnit(nth($gradient, 1)) > 45 and removeUnit(nth($gradient, 1)) < 135) or (removeUnit(nth($gradient, 1)) > 225 and removeUnit(nth($gradient, 1)) < 315) {
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{ie-hex-str(nth(nth($gradient, 2), 1))}', endColorstr='#{ie-hex-str(nth(nth($gradient, length($gradient)), 1))}', gradientType=1);
+        } @else {
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{ie-hex-str(nth(nth($gradient, 2), 1))}', endColorstr='#{ie-hex-str(nth(nth($gradient, length($gradient)), 1))}', gradientType=0);
+        }
+    }
+}
+@function removeUnit($num) {
+    @return $num / ($num * 0 + 1);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@mixin font-face($fontFamily, $filePath, $fontStyle: normal, $fontWeight: normal) {
+    @font-face {
+        font-style: $fontStyle;
+        font-weight: $fontWeight;
+        font-family: $fontFamily;
+        src: url('#{$filePath}.eot');
+        src: url('#{$filePath}.eot?#iefix')         format('eot'),
+             url('#{$filePath}.svg##{$fontFamily}') format('svg'),
+             url('#{$filePath}.woff')               format('woff'),
+             url('#{$filePath}.ttf')                format('truetype');
+    }
+}
+
 @mixin text-fill-color($color: transparent) {
-    @include background-clip(text);
     @include prefixer(text-fill-color, $color, webkit);
 }
 
-//text-stroke(1px red)
 @mixin text-stroke($value) {
+    // 1px red
     @include prefixer(text-stroke, $value, webkit);
+}
+
+@mixin box-reflect($value: below){
+    // direction  offset  mask-box-image;
+    @include prefixer(box-reflect, $value, webkit);
 }
