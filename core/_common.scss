@@ -1,8 +1,25 @@
 @charset "utf-8";
 //-----------------------------------------------------
-// common scss
 // 整合常用的 @mixin 和 %
 //-----------------------------------------------------
+
+@mixin placeholder($color: #ccc) {
+    &::-webkit-input-placeholder {
+        color: $color;
+    }
+    &::-moz-placeholder {
+        color: $color;
+    }
+    &:-moz-placeholder {
+        color: $color;
+    }
+    &:-ms-input-placeholder {
+        color: $color;
+    }
+}
+%placeholder {
+    @include placeholder;
+}
 
 @mixin inline-block {
     display: inline-block;

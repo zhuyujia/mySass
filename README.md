@@ -1,13 +1,23 @@
-[zSass](https://github.com/zhuyujia/zSass) 是自己整理的一个 sass 库，参考了 [sassCore](https://github.com/marvin1023/sassCore)。它包括：
+[zSass](https://github.com/zhuyujia/zSass) 是自己整理的一个 sass 库，参考了 [sassCore](https://github.com/marvin1023/sassCore)。
 
-## reset.scss ##
+## 目录结构 ##
 
-重置浏览器样式及默认值设置。（参考：[normalize](https://github.com/necolas/normalize.css/)）
+### variables.scss ###
 
-## common.scss ##
+默认值设置。
 
-整合常用的 @mixin 和 %，后期还会扩展。
+### reset.scss ###
 
-## css3.scss ##
+重置浏览器样式。（参考：[normalize](https://github.com/necolas/normalize.css/)）
 
-整理常用的一些 css3 属性。（进度：*50%*）
+### common.scss ###
+
+整合常用的 @mixin 和 %。
+
+### css3.scss ###
+
+整理常用的一些 css3 属性。
+
+## 如何引用 ##
+
+    @import "E:/your_path/_base.scss";

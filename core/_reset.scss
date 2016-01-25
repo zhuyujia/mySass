@@ -1,15 +1,7 @@
 @charset "utf-8";
 //-----------------------------------------------------
-// reset scss
-// 重置浏览器样式及默认值设置
+// 重置浏览器样式
 //-----------------------------------------------------
-
-$lte7:              true !default; //是否兼容 ie6/7
-$filter:            true !default; //是否开启滤镜
-$baseFontSize:      12px !default; //文本默认大小
-$baseTextColor:     #000 !default; //文本默认颜色
-$baseFontFamily:    \5FAE\8F6F\96C5\9ED1, \5b8b\4f53, arial, sans-serif !default;  //文本默认字体
-$placeholder:       false #ccc !default;   //是否设置占位符颜色
 
 html {
     font-family: sans-serif;
@@ -219,23 +211,4 @@ a {
 
 ul,ol {
     list-style: none outside none;
-}
-
-@if nth($placeholder, 1) {
-    input::-webkit-input-placeholder,
-    textarea::-webkit-input-placeholder {
-        color: nth($placeholder, 2);
-    }
-    input::-moz-placeholder,
-    textarea::-moz-placeholder {
-        color: nth($placeholder, 2);
-    }
-    input:-moz-placeholder,
-    textarea:-moz-placeholder {
-        color: nth($placeholder, 2);
-    }
-    input:-ms-input-placeholder,
-    textarea:-ms-input-placeholder {
-        color: nth($placeholder, 2);
-    }
 }
