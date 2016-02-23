@@ -20,4 +20,4 @@
 
 ## 如何引用 ##
 
-    @import "E:/your_path/_base.scss";
+    @import "E:/your_path/base";
