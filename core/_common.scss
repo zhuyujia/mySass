@@ -148,3 +148,27 @@
         _line-height: $height;
     }
 }
+
+// 三角形（边框法）
+@mixin triangle($direction, $size, $borderColor) {
+    overflow:hidden;
+    width:0;
+    height:0;
+    @if $direction == top {
+        border-bottom:$size solid $borderColor;
+        border-left:$size dashed transparent;
+        border-right:$size dashed transparent;
+    } @else if $direction == right {
+        border-left:$size solid $borderColor;
+        border-top:$size dashed transparent;
+        border-bottom:$size dashed transparent;
+    } @else if $direction == bottom {
+        border-top:$size solid $borderColor;
+        border-left:$size dashed transparent;
+        border-right:$size dashed transparent;
+    } @else if $direction == left {
+        border-right:$size solid $borderColor;
+        border-top:$size dashed transparent;
+        border-bottom:$size dashed transparent;
+    }
+}
