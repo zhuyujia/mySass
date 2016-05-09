@@ -126,7 +126,7 @@
     }
 }
 
-@mixin bgcolor-alpha($bgColor) {
+@mixin bgcolor-alpha($bgColor: rgba(0, 0, 0, .5)) {
     background-color: $bgColor;
     @if $filter {
         filter: progid:DXImageTransform.Microsoft.gradient(enabled='true',startColorstr='#{ie-hex-str($bgColor)}', endColorstr='#{ie-hex-str($bgColor)}');
