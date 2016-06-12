@@ -21,3 +21,5 @@
 ## 如何引用 ##
 
     @import "E:/your_path/base";
+
+注：因为 sass 不能导入在线 sass 文件，所以默认统一放在 E 盘进行调用。
