@@ -5,8 +5,8 @@
 //-----------------------------------------------------
 
 // prefixer
-// 用于在属性上加前缀，默认输出 webkit，moz 和标准
-@mixin prefixer($property, $value, $prefixes: webkit moz) {
+// 用于在属性上加前缀，默认输出 webkit，moz，ms 和标准
+@mixin prefixer($property, $value, $prefixNo: $prefixNo, $prefixes: webkit moz ms) {
     @each $prefix in $prefixes {
         @if $prefix == webkit and $prefixWebkit {
             -webkit-#{$property}: $value;
@@ -22,8 +22,8 @@
 }
 
 // prefixer-value
-// 用于在值上加前缀，默认输出 webkit，moz 和标准
-@mixin prefixer-value($property, $value, $prefixes: webkit moz) {
+// 用于在值上加前缀，默认输出 webkit，moz，ms 和标准
+@mixin prefixer-value($property, $value, $prefixNo: $prefixNo, $prefixes: webkit moz ms) {
     @each $prefix in $prefixes {
         @if $prefix == webkit and $prefixWebkit {
             #{$property}: -webkit-#{$value};
@@ -79,10 +79,14 @@
     }
 }
 
-// linear-gradient(90deg, #f00 0%, #0ff 50%, #0f0 100%)
+@function removeUnit($num) {
+    @return $num / ($num * 0 + 1);
+}
+
+// linear-gradient(background-image, 90deg, #f00 0%, #0ff 50%, #0f0 100%)
 // 无需使用 top 或 to top 之类的，直接使用角度，比如 0deg | 90deg
-@mixin linear-gradient($gradient...) {
-    @include prefixer-value(background-image, linear-gradient($gradient));
+@mixin linear-gradient($property, $gradient...) {
+    @include prefixer-value($property, linear-gradient($gradient), false);
     @if $filter {
         @if (removeUnit(nth($gradient, 1)) > 45 and removeUnit(nth($gradient, 1)) < 135) or (removeUnit(nth($gradient, 1)) > 225 and removeUnit(nth($gradient, 1)) < 315) {
             filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{ie-hex-str(nth(nth($gradient, 2), 1))}', endColorstr='#{ie-hex-str(nth(nth($gradient, length($gradient)), 1))}', gradientType=1);
@@ -92,10 +96,10 @@
     }
 }
 
-// repeating-linear-gradient(0deg, #f00, #ff0 10%, #f00 15%)
+// repeating-linear-gradient(background-image, 0deg, #f00, #ff0 10%, #f00 15%)
 // 无需使用 top 或 to top 之类的，直接使用角度，比如 0deg | 90deg
-@mixin repeating-linear-gradient($gradient...) {
-    @include prefixer-value(background-image, repeating-linear-gradient($gradient));
+@mixin repeating-linear-gradient($property, $gradient...) {
+    @include prefixer-value($property, repeating-linear-gradient($gradient), false);
     @if $filter {
         @if (removeUnit(nth($gradient, 1)) > 45 and removeUnit(nth($gradient, 1)) < 135) or (removeUnit(nth($gradient, 1)) > 225 and removeUnit(nth($gradient, 1)) < 315) {
             filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{ie-hex-str(nth(nth($gradient, 2), 1))}', endColorstr='#{ie-hex-str(nth(nth($gradient, length($gradient)), 1))}', gradientType=1);
@@ -103,9 +107,6 @@
             filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{ie-hex-str(nth(nth($gradient, 2), 1))}', endColorstr='#{ie-hex-str(nth(nth($gradient, length($gradient)), 1))}', gradientType=0);
         }
     }
-}
-@function removeUnit($num) {
-    @return $num / ($num * 0 + 1);
 }
 
 @mixin transform($property...) {
@@ -123,29 +124,35 @@
     // $style: flat | preserve-3d
     @include prefixer(transform-style, $style);
 }
+
 %transform-style {
     @include transform-style;
 }
 
-@mixin matrix($args...){
+@mixin matrix($args...) {
     @include transform(matrix($args));
 }
-@mixin matrix3d($args...){
+
+@mixin matrix3d($args...) {
     @include transform(matrix3d($args));
 }
 
 @mixin translate($value...) {
     @include transform(translate($value));
 }
+
 @mixin translate3d($value...) {
     @include transform(translate3d($value));
 }
+
 @mixin translateX($value) {
     @include transform(translateX($value));
 }
+
 @mixin translateY($value) {
     @include transform(translateY($value));
 }
+
 @mixin translateZ($value) {
     @include transform(translateZ($value));
 }
@@ -153,15 +160,19 @@
 @mixin rotate($angle) {
     @include transform(rotate($angle));
 }
+
 @mixin rotate3d($angle...) {
     @include transform(rotate3d($angle));
 }
+
 @mixin rotateX($angle) {
     @include transform(rotateX($angle));
 }
+
 @mixin rotateY($angle) {
     @include transform(rotateY($angle));
 }
+
 @mixin rotateZ($angle) {
     @include transform(rotateZ($angle));
 }
@@ -169,15 +180,19 @@
 @mixin scale($ratio...) {
     @include transform(scale($ratio));
 }
+
 @mixin scale3d($ratio...) {
     @include transform(scale3d($ratio));
 }
+
 @mixin scaleX($ratio) {
     @include transform(scaleX($ratio));
 }
+
 @mixin scaleY($ratio) {
     @include transform(scaleY($ratio));
 }
+
 @mixin scaleZ($ratio) {
     @include transform(scaleZ($ratio));
 }
@@ -188,10 +203,12 @@
     @include transform(skew($angle));
     @include backface-visibility;
 }
+
 @mixin skewX($angle) {
     @include transform(skewX($angle));
     @include backface-visibility;
 }
+
 @mixin skewY($angle) {
     @include transform(skewY($angle));
     @include backface-visibility;
@@ -201,6 +218,7 @@
     // $value: none | number
     @include prefixer(perspective, $value);
 }
+
 %perspective {
     @include perspective;
 }
@@ -215,6 +233,7 @@
     // $visibility: visible | hidden
     @include prefixer(backface-visibility, $visibility, webkit moz ms);
 }
+
 %backface-visibility {
     @include backface-visibility;
 }
@@ -224,15 +243,6 @@
     @include prefixer(transition, $values);
 }
 
-@mixin transition-property($props...) {
-    @if $prefixWebkit {
-        -webkit-transition-property: transitionPropertyNames($props, webkit);
-    }
-    @if $prefixMoz {
-        -moz-transition-property: transitionPropertyNames($props, moz);
-    }
-    transition-property: transitionPropertyNames($props);
-}
 @function transitionPropertyName($prop, $prefix) {
     @if $prop == transform {
         @if $prefix == webkit and $prefixWebkit {
@@ -248,12 +258,23 @@
         @return $prop;
     }
 }
+
 @function transitionPropertyNames($props, $prefix: no) {
     $new-props: ();
     @each $prop in $props {
         $new-props: append($new-props, transitionPropertyName($prop, $prefix), comma);
     }
     @return $new-props;
+}
+
+@mixin transition-property($props...) {
+    @if $prefixWebkit {
+        -webkit-transition-property: transitionPropertyNames($props, webkit);
+    }
+    @if $prefixMoz {
+        -moz-transition-property: transitionPropertyNames($props, moz);
+    }
+    transition-property: transitionPropertyNames($props);
 }
 
 @mixin transition-duration($times...) {
@@ -268,27 +289,27 @@
     @include prefixer(transition-delay, $times);
 }
 
-@mixin animation ($animations...) {
+@mixin animation($animations...) {
     @include prefixer(animation, $animations);
 }
 
-@mixin animation-name ($names...) {
+@mixin animation-name($names...) {
     @include prefixer(animation-name, $names);
 }
 
-@mixin animation-duration ($times...) {
+@mixin animation-duration($times...) {
     @include prefixer(animation-duration, $times);
 }
 
-@mixin animation-timing-function ($motions...) {
+@mixin animation-timing-function($motions...) {
     @include prefixer(animation-timing-function, $motions);
 }
 
-@mixin animation-delay ($times...) {
+@mixin animation-delay($times...) {
     @include prefixer(animation-delay, $times);
 }
 
-@mixin animation-iteration-count ($count...) {
+@mixin animation-iteration-count($count...) {
     // infinite | <number>
     @if length($count) >= 1 {
         @include prefixer(animation-iteration-count, $count);
@@ -297,12 +318,12 @@
     }
 }
 
-@mixin animation-direction ($directions...) {
+@mixin animation-direction($directions...) {
     // normal | reverse | alternate | alternate-reverse
     @include prefixer(animation-direction, $directions);
 }
 
-@mixin animation-play-state ($states...) {
+@mixin animation-play-state($states...) {
     // running | paused
     @if length($states) >= 1 {
         @include prefixer(animation-play-state, $states);
@@ -311,7 +332,7 @@
     }
 }
 
-@mixin animation-fill-mode ($modes...) {
+@mixin animation-fill-mode($modes...) {
     // none | forwards | backwards | both
     @if length($modes) >= 1 {
         @include prefixer(animation-fill-mode, $modes);
@@ -320,7 +341,7 @@
     }
 }
 
-@mixin keyframes($name, $prefixes: webkit moz) {
+@mixin keyframes($name, $prefixes: webkit moz ms) {
     @each $prefix in $prefixes {
         @if $prefix == webkit and $prefixWebkit {
             @-webkit-keyframes #{$name} {
@@ -355,7 +376,7 @@
 }
 
 @mixin column-count($count: auto) {
-  @include prefixer(column-count, $count);
+    @include prefixer(column-count, $count);
 }
 
 @mixin column-gap($gap: normal) {
@@ -367,7 +388,7 @@
     @include prefixer(column-rule, $value);
 }
 
-@mixin column-rule-width ($width: none) {
+@mixin column-rule-width($width: none) {
     @include prefixer(column-rule-width, $width);
 }
 
@@ -393,10 +414,10 @@
         font-weight: $fontWeight;
         font-family: $fontFamily;
         src: url('#{$filePath}.eot');
-        src: url('#{$filePath}.eot?#iefix')         format('eot'),
-             url('#{$filePath}.svg##{$fontFamily}') format('svg'),
-             url('#{$filePath}.woff')               format('woff'),
-             url('#{$filePath}.ttf')                format('truetype');
+        src: url('#{$filePath}.eot?#iefix') format('eot'),
+        url('#{$filePath}.svg##{$fontFamily}') format('svg'),
+        url('#{$filePath}.woff') format('woff'),
+        url('#{$filePath}.ttf') format('truetype');
     }
 }
 
@@ -409,7 +430,7 @@
     @include prefixer(text-stroke, $value, webkit);
 }
 
-@mixin box-reflect($value: below){
+@mixin box-reflect($value: below) {
     // direction  offset  mask-box-image;
     @include prefixer(box-reflect, $value, webkit);
 }
